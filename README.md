@@ -53,6 +53,15 @@ Send messages to Discord channels via webhooks. Supports text messages, embeds, 
 
 Create a webhook in Discord: Server Settings → Integrations → Webhooks → New Webhook → Copy URL.
 
+### Webhooks and channels
+
+A webhook is tied to a specific channel. Messages sent through it always go to that channel by default. This matters for threads:
+
+- **Regular channels** — Use `thread_id` to send a message into an existing thread within that channel. Webhooks cannot create new threads in regular channels — `thread_name` will not work here. The thread must already exist.
+- **Forum channels** — The webhook must be created on the forum channel itself. Every message sent through it **must** include `thread_name` (to create a new post) or `thread_id` (to reply to an existing post). Sending without either will fail, because forum channels have no main feed to post to. You can also use `applied_tags` when creating a new forum post.
+
+If you need to post to threads in different channels, you need a separate webhook for each channel.
+
 ### How it works
 
 Each part of a Discord webhook message is represented as a typed struct. Optional fields default to `None` and are omitted from the JSON payload. Structs that are entirely optional fields implement `Default`, so you can set only the fields you care about and use `..Default::default()` for the rest.
