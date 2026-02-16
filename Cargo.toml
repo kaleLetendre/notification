@@ -1,8 +1,16 @@
 [package]
-name = "notify"
+name = "notification"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-serde = { version = "1.0.228", features = ["derive"] }
-ureq = { version = "3.2.0", features = ["json"] }
+lettre = { version = "0.11.19", default-features = false, features = ["smtp-transport", "rustls-tls", "builder"], optional = true}
+serde = { version = "1.0.228", features = ["derive"], optional = true}
+serde_json = { version = "1.0.149", optional = true }
+ureq = { version = "3.2.0", features = ["json", "multipart"], optional = true }
+
+[features]
+default = ["console","discord","email"]
+console = []
+discord = ["dep:ureq", "dep:serde", "dep:serde_json"]
+email = ["dep:lettre"]
