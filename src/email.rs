@@ -1,4 +1,7 @@
 use crate::error::Error;
+use lettre::{Message as LettreMessage, SmtpTransport, Transport};
+use lettre::transport::smtp::authentication::Credentials;
+use lettre::message::Mailbox;
 
 pub struct Config{
     pub smtp_server: String,
@@ -16,5 +19,5 @@ pub struct Message{
 }
 
 pub fn send(config: &Config, msg:&Message) -> Result<(),Error> {
-    todo!();
+    
 } 

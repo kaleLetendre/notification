@@ -193,6 +193,7 @@ fn send_json(url: &str, msg: &Message) -> Result<(),Error> {
         Err(e) => return Err(Error::NetworkFailure(e.to_string()))
     }
 }
+
 fn send_multipart(url: &str, msg: &Message, attachments: &Vec<Attachment>) -> Result<(),Error> {
     let json_payload = serde_json::to_string(msg).unwrap();
     let mut form = Form::new()
